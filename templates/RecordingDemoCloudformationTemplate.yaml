@@ -12,7 +12,7 @@ Parameters:
     Default: 8192
   ECSContainerName:
     Type: String
-    Default: 'recording-demo-container'
+    Default: 'interview-recording-dev-container'
   ECSContainerCpu:
     Type: Number
     Default: 4096
@@ -25,7 +25,7 @@ Parameters:
   EcsClusterName:
     Type: String
     Description: 'Specifies the ECS Cluster Name with which the resources would be associated'
-    Default: 'RecordingDemoEC2Cluster'
+    Default: 'InterviewRecordingDevEC2Cluster'
   ECRDockerImageArn:
     Type: String
     Description: 'ARN of the docker image stored in ECR along with the tag'
@@ -53,11 +53,11 @@ Parameters:
     ConstraintDescription: Please choose a valid instance type.
   RecordingDemoLogGroupName:
     Type: String
-    Default: RecordingDemoLogGroup
+    Default: LogGroupNameLogGroup
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
     Type: String
-    Default: recording-demo-environment
+    Default: interview-recording-dev-environment
   VpcCIDR:
     Description: Please enter the IP range (CIDR notation) for this VPC
     Type: String
@@ -76,7 +76,7 @@ Resources:
     Properties:
         AccessControl: BucketOwnerFullControl
         BucketName:
-          Fn::Join: ['', ['chime-meeting-sdk-', {Ref: 'AWS::AccountId'}, '-', {Ref: 'AWS::Region'}, '-recordings']]
+          Fn::Join: ['', ['','interview-app-dev-chime-recordings']]
   RecordingDemoLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -101,7 +101,7 @@ Resources:
   RecordingDemoLambdaFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      FunctionName: RecordingDemoLambda
+      FunctionName: InterviewRecordingDevLambda
       Description: Lambda to interact with ECS for starting and stopping recording.
       Handler: index.handler
       Role: 
