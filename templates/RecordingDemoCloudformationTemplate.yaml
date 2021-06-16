@@ -53,7 +53,7 @@ Parameters:
     ConstraintDescription: Please choose a valid instance type.
   RecordingDemoLogGroupName:
     Type: String
-    Default: LogGroupNameLogGroup
+    Default: InterviewRecordingDevLogGroup
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
     Type: String

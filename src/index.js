@@ -130,8 +130,8 @@ function startRecording(event, context, callback, meetingUrl, interviewId) {
         }
         else {
             console.log(data);  // successful response
-            response.statusCode = 200;
             response.body = JSON.stringify((data.tasks.length && data.tasks[0].taskArn) ? data.tasks[0].taskArn : data, null, ' ');
+            response.statusCode = data.tasks.length ? 200 : 500
             context.succeed(response);
         }
     });
