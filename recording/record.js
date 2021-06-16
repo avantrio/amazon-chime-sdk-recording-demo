@@ -7,6 +7,8 @@ const { S3Uploader } = require('./utils/upload');
 const MEETING_URL = process.env.MEETING_URL || 'Not present in environment';
 console.log(`[recording process] MEETING_URL: ${MEETING_URL}`);
 
+const INTERVIEW_ID = process.env.INTERVIEW_ID || 'Not present in environment';
+
 const args = process.argv.slice(2);
 const BUCKET_NAME = args[0];
 console.log(`[recording process] BUCKET_NAME: ${BUCKET_NAME}`);
@@ -73,7 +75,7 @@ const year = timestamp.getFullYear();
 const month = timestamp.getMonth() + 1;
 const day = timestamp.getDate();
 const hour = timestamp.getUTCHours();
-const fileName = `${year}/${month}/${day}/${hour}/${fileTimestamp}.mp4`;
+const fileName = `${INTERVIEW_ID}.mp4`; //TODO: change file name
 new S3Uploader(BUCKET_NAME, fileName).uploadStream(transcodeStreamToOutput.stdout);
 
 // event handler for docker stop, not exit until upload completes
