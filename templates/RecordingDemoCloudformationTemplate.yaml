@@ -6,22 +6,22 @@ Transform: 'AWS::Serverless-2016-10-31'
 Parameters:
   ECSTaskCpu:
     Type: Number
-    Default: 4096
+    Default: 1024
   ECSTaskMemory:
     Type: Number
-    Default: 8192
+    Default: 1024
   ECSContainerName:
     Type: String
     Default: 'interview-recording-dev-container'
   ECSContainerCpu:
     Type: Number
-    Default: 4096
+    Default: 1024
   ECSContainerMemory:
     Type: Number
-    Default: 8192
+    Default: 1024
   ECSContainerMemoryReservation:
     Type: Number
-    Default: 8192
+    Default: 1024
   EcsClusterName:
     Type: String
     Description: 'Specifies the ECS Cluster Name with which the resources would be associated'
@@ -34,7 +34,7 @@ Parameters:
     Default: 1
   EcsAsgMaxSize:
     Type: Number
-    Default: 5
+    Default: 3
   DesiredCapacity:
     Type: Number
     Default: 2
@@ -46,10 +46,10 @@ Parameters:
   InstanceType:
     Description: EC2 instance type
     Type: String
-    Default: t3.xlarge
-    AllowedValues: [mt2.large, t2.xlarge, t2.2xlarge, t3.large, t3.xlarge, t3.2xlarge, m4.large, m4.xlarge, 
+    Default: t3.medium
+    AllowedValues: [t2.large, t2.xlarge, t2.2xlarge, t3.micro, t3.medium, t3.large, t3.xlarge, t3.2xlarge, m4.large, m4.xlarge, 
     m4.2xlarge, m4.4xlarge, m5.large, m5.xlarge, m5.2xlarge, m5.4xlarge, m5.8xlarge, c4.xlarge, c4.2xlarge, 
-    c4.4xlarge, c5.large, c5.xlarge, c5.2xlarge, c5.4xlarge]
+    c4.4xlarge, c5.large, c5.xlarge, c5.2xlarge, c5.4xlarge, ]
     ConstraintDescription: Please choose a valid instance type.
   RecordingDemoLogGroupName:
     Type: String
@@ -74,9 +74,16 @@ Resources:
   RecordingArtifactsUploadBucket:
     Type: AWS::S3::Bucket
     Properties:
-        AccessControl: BucketOwnerFullControl
-        BucketName:
-          Fn::Join: ['', ['','interview-app-dev-chime-recordings']]
+      AccessControl: BucketOwnerFullControl
+      BucketName:
+        Fn::Join: ['', ['','interview-app-dev-chime-recordings']]
+      # LifecycleConfiguration: 
+      #   Rules: 
+      #   - ExpirationInDays: 7
+      # NotificationConfiguration: 
+      #   LambdaConfigurations:
+      #     Event: "s3:ObjectCreated:*"
+      #     Function: "arn:aws:lambda:us-east-1:202685914904:function:fix_timestamps"
   RecordingDemoLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:

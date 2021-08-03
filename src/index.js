@@ -115,9 +115,7 @@ function startRecording(event, context, callback, meetingUrl, interviewId) {
                 }
             ],
         },
-        placementConstraints: [{
-            type: "distinctInstance"
-        }],
+        placementConstraints: [],
         taskDefinition: ecsTaskDefinationArn
     };
     
